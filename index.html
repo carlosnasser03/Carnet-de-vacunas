@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Carnet · Salud de mis mascotas</title>
+<meta name="description" content="Carnet de vacunación digital para mascotas. Registra dosis aplicadas, calcula la próxima fecha y lleva la bitácora de enfermedades y medicamentos.">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f0f0f" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<a class="skip" href="#principal">Saltar al contenido</a>
+
+<header class="appbar">
+  <a class="wordmark" href="#/" aria-label="Inicio">
+    <svg class="wordmark__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect x="2.5" y="4.5" width="19" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <circle cx="8.5" cy="11" r="2.4" fill="currentColor"/>
+      <path d="M13.5 9.5h5M13.5 12.5h5M5.5 16h13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    </svg>
+    <span class="wordmark__text">Carnet</span>
+  </a>
+  <nav class="appbar__actions" aria-label="Acciones">
+    <a class="btn btn--ghost btn--icon" href="#/ajustes" aria-label="Ajustes">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="ico">
+        <circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M12 2.8v2.4M12 18.8v2.4M21.2 12h-2.4M5.2 12H2.8M18.5 5.5l-1.7 1.7M7.2 16.8l-1.7 1.7M18.5 18.5l-1.7-1.7M7.2 7.2 5.5 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+    </a>
+  </nav>
+</header>
+
+<main id="principal" class="shell" tabindex="-1"></main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
