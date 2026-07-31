@@ -216,16 +216,22 @@ img { display: block; max-width: 100%; }
 
 /* Los items de grid traen min-width:auto, así que un hijo con ancho mínimo
    intrínseco (el carnet, por su aspect-ratio) ensancharía la página entera. */
-.stack > *, .layout > *, .rows > *, .petlist > *, .grid2 > * { min-width: 0; }
+.stack > *, .layout > *, .layout__aside > *,
+.rows > *, .petlist > *, .grid2 > * { min-width: 0; }
+
+/* El espaciado es de una sola columna hacia arriba: se define siempre, no solo
+   en escritorio. Dejarlo dentro del breakpoint hacía que en móvil el carnet,
+   las barras de acciones y el historial quedaran pegados sin separación. */
+.layout { display: grid; gap: var(--s5); }
+.layout__aside { display: grid; gap: var(--s4); align-content: start; }
 
 @media (min-width: 860px) {
   .layout {
-    display: grid;
     grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
     gap: var(--s6);
     align-items: start;
   }
-  .layout__aside { position: sticky; top: 84px; display: grid; gap: var(--s4); }
+  .layout__aside { position: sticky; top: 84px; }
 }
 
 /* -------------------------------------------------------------- títulos -- */
@@ -324,7 +330,10 @@ img { display: block; max-width: 100%; }
 
 .carnet {
   perspective: 1600px;
-  max-width: 480px;
+  /* El tope duro evita que el ancho mínimo intrínseco de la tarjeta
+     (aspect-ratio + min-height) se salga de su contenedor. */
+  width: 100%;
+  max-width: min(480px, 100%);
 }
 
 .carnet__inner {
