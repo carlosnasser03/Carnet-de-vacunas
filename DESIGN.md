@@ -13,9 +13,10 @@ exactamente el fallo típico de un rediseño "en pasteles".
 
 Estructura:
 
-- **El carnet** es cartulina rosa palo con tinta ciruela, en modo claro y en
-  oscuro por igual. Es un objeto físico: una tarjeta no cambia de color según la
-  luz de la habitación.
+- **El carnet** es cartulina kraft con tinta sepia, en modo claro y en oscuro por
+  igual. Es un objeto físico: una tarjeta no cambia de color según la luz de la
+  habitación. La tinta va en sepia y no en ciruela porque sobre papel un tono
+  cálido lee como tinta, y uno frío lee como error de impresión.
 - **El resto de la app** es blanco puro con superficies teñidas apenas hacia el
   rosa. El fondo NO es pastel: si lo fuera, los pasteles de la interfaz dejarían
   de leerse como color.
@@ -65,6 +66,25 @@ forma distinta:
 
 Los tres tonos están deliberadamente separados en la rueda para que se distingan
 aun a baja saturación.
+
+### El grano del papel
+
+La textura del carnet se genera con filtros SVG (`feTurbulence`) incrustados como
+data URI, no con una fotografía de papel. Pesa alrededor de 1 KB en vez de 50–200,
+no se pixela a ningún tamaño, funciona sin conexión y se puede apagar al imprimir.
+
+Son tres capas sobre el color base: fibras gruesas y grano fino, ambas en
+`multiply` para que solo oscurezcan el papel y nunca lo aclaren, más un degradado
+radial de luz despareja.
+
+El grano compromete el contraste, así que se mide sobre los píxeles compuestos y
+no sobre el color del token. Medición actual: la tinta mantiene **7.76:1 incluso
+sobre la mota más oscura** del papel (9.6:1 en promedio) y el texto secundario
+**4.64:1 en el peor píxel** (5.74:1 en promedio). Si se sube la opacidad de las
+capas, hay que volver a medir: el límite real es el píxel más oscuro, no el medio.
+
+En impresión la textura se apaga por completo — gasta tinta y ensucia el texto
+pequeño.
 
 ### La regla de texto sobre relleno
 

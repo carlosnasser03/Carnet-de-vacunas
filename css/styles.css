@@ -41,13 +41,20 @@
   --danger-ink: oklch(0.42 0.145 28);
   --danger-bg: oklch(0.945 0.046 25);
 
-  /* Carnet: cartulina rosa palo, idéntica en ambos temas. Es un objeto físico,
-     y una tarjeta no cambia de color según la luz de la habitación. */
-  --card-bg: oklch(0.905 0.055 14);
-  --card-bg-deep: oklch(0.855 0.062 8);
-  --card-ink: oklch(0.25 0.055 15);
-  --card-muted: oklch(0.42 0.048 15);
-  --card-rule: oklch(0.755 0.058 14);
+  /* Carnet: cartulina kraft, idéntica en ambos temas. Es un objeto físico, y
+     una tarjeta no cambia de color según la luz de la habitación. La tinta va
+     en sepia y no en ciruela: sobre papel, un tono cálido lee como tinta y un
+     tono frío lee como error de impresión. */
+  --card-bg: oklch(0.875 0.038 85);
+  --card-bg-deep: oklch(0.815 0.045 80);
+  --card-ink: oklch(0.26 0.040 55);
+  --card-muted: oklch(0.40 0.036 60);
+  --card-rule: oklch(0.695 0.048 80);
+
+  /* Grano de papel generado con filtros SVG en lugar de una foto: pesa ~1 KB,
+     no se pixela a ningún tamaño y se puede apagar al imprimir. */
+  --papel-grano: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)' opacity='0.38'/%3E%3C/svg%3E");
+  --papel-fibras: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.04 0.6' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0 0 0 0 0 0 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23f)' opacity='0.5'/%3E%3C/svg%3E");
 
   /* Tipografía */
   --font-doc: ui-serif, Georgia, "Times New Roman", serif;
@@ -337,8 +344,15 @@ img { display: block; max-width: 100%; }
   display: flex; flex-direction: column;
   padding: var(--s4);
   border-radius: var(--r-card);
-  background:
-    radial-gradient(120% 140% at 85% 0%, var(--card-bg) 0%, var(--card-bg-deep) 100%);
+  /* Tres capas: fibras gruesas, grano fino y un degradado de luz despareja.
+     Las dos primeras van en multiply para oscurecer el papel, nunca aclararlo. */
+  background-color: var(--card-bg);
+  background-image:
+    var(--papel-fibras),
+    var(--papel-grano),
+    radial-gradient(115% 135% at 82% 0%, transparent 0%, var(--card-bg-deep) 100%);
+  background-size: 240px 240px, 160px 160px, cover;
+  background-blend-mode: multiply, multiply, normal;
   color: var(--card-ink);
   box-shadow: var(--shadow-card);
   backface-visibility: hidden;
@@ -734,7 +748,9 @@ select.control { appearance: none; background-image: none; }
 .petcard__photo {
   width: 52px; height: 64px; flex: none;
   border-radius: 4px;
-  background: var(--card-bg);
+  background-color: var(--card-bg);
+  background-image: var(--papel-grano);
+  background-blend-mode: multiply;
   color: var(--card-muted);
   display: grid; place-items: center;
   overflow: hidden;
@@ -772,7 +788,13 @@ select.control { appearance: none; background-image: none; }
   .layout { display: block; }
   .carnet { max-width: 100%; break-inside: avoid; }
   .carnet__inner { transform: none !important; aspect-ratio: auto; min-height: 0; }
-  .carnet__face { position: static; box-shadow: none; border: 1.5px solid #000; backface-visibility: visible; }
+  /* El grano se apaga en papel: gasta tinta y ensucia el texto pequeño. */
+  .carnet__face {
+    position: static; box-shadow: none; border: 1.5px solid #000;
+    backface-visibility: visible;
+    background-image: none !important;
+  }
+  .petcard__photo { background-image: none !important; }
   .carnet__face--reverso { transform: none; margin-top: 12px; }
   .row, .empty, .note, .treatments li { break-inside: avoid; border-color: #999; }
   .print-only { display: block !important; }
