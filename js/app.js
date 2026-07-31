@@ -16,6 +16,7 @@ import { toast, reportar } from './ui.js';
 import { pedirPersistencia } from './persistencia.js';
 
 const main = document.querySelector('#principal');
+const barra = document.querySelector('#barra');
 
 /* ------------------------------------------------------- estado de interfaz */
 
@@ -31,6 +32,8 @@ function render() {
 
   const enMascota = hash.match(/^#\/m\/([^/]+)$/);
   const idMascota = enMascota ? decodeURIComponent(enMascota[1]) : null;
+
+  barra.innerHTML = vistas.barraSuperior(hash);
 
   if (hash === '#/ajustes') main.innerHTML = vistas.vistaAjustes();
   else if (idMascota) main.innerHTML = vistas.vistaMascota(idMascota, ui);

@@ -11,6 +11,54 @@ import { esc, insignia, GLIFOS, SVG_PATA } from './ui.js';
 import { estadoAlmacenamiento } from './persistencia.js';
 import * as instalar from './instalar.js';
 
+/* --------------------------------------------------------- barra superior -- */
+
+const MARCA = `
+  <span class="wordmark">
+    <svg class="wordmark__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect x="2.5" y="4.5" width="19" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <circle cx="8.5" cy="11" r="2.4" fill="currentColor"/>
+      <path d="M13.5 9.5h5M13.5 12.5h5M5.5 16h13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    </svg>
+    <span class="wordmark__text">Carnet</span>
+  </span>`;
+
+const BOTON_AJUSTES = `
+  <a class="btn btn--ghost" href="#/ajustes">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="ico"
+         fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+      <path d="M4 7h10.8M19.2 7H20M4 12h4.8M13.2 12H20M4 17h8.8M17.2 17H20"/>
+      <circle cx="17" cy="7" r="2.2"/>
+      <circle cx="11" cy="12" r="2.2"/>
+      <circle cx="15" cy="17" r="2.2"/>
+    </svg>
+    Ajustes
+  </a>`;
+
+/**
+ * La barra es pegajosa, así que es el único sitio donde el botón de volver
+ * está siempre a la vista. En el cuerpo de la página se perdía al bajar: el
+ * carnet de una mascota mide más del doble que la pantalla.
+ */
+export function barraSuperior(ruta) {
+  const enInicio = !ruta.startsWith('#/m/') && ruta !== '#/ajustes';
+
+  const izquierda = enInicio
+    ? MARCA
+    : `<a class="btn btn--ghost appbar__volver" href="#/">
+         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="ico"
+              fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+           <path d="M14.5 5 8 12l6.5 7"/>
+         </svg>
+         Mis mascotas
+       </a>`;
+
+  // En Ajustes no se repite el botón que lleva a Ajustes.
+  const derecha = ruta === '#/ajustes' ? '' : BOTON_AJUSTES;
+
+  return `${izquierda}<nav class="appbar__actions" aria-label="Acciones">${derecha}</nav>`;
+}
+
 /* ---------------------------------------------------------------- carnet -- */
 
 export function carnet(m, cara = 'anverso') {
@@ -212,10 +260,6 @@ export function vistaMascota(id, { tab = 'vacunas', cara = 'anverso' } = {}) {
 
   return `
   <div class="stack">
-    <div class="no-print">
-      <a class="btn btn--sm" href="#/">← Mis mascotas</a>
-    </div>
-
     <div class="layout">
       <div class="layout__aside">
         ${carnet(m, cara)}
@@ -385,9 +429,6 @@ export function vistaAjustes() {
 
   return `
   <div class="stack">
-    <div>
-      <a class="btn btn--sm" href="#/">← Mis mascotas</a>
-    </div>
     <div>
       <h1 class="page-title">Ajustes</h1>
       <p class="page-sub">Los intervalos que trae la app son valores de referencia internacionales y son editables. La norma de rabia y los productos disponibles cambian según el país.</p>
