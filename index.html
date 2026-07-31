@@ -27,11 +27,18 @@
     <span class="wordmark__text">Carnet</span>
   </a>
   <nav class="appbar__actions" aria-label="Acciones">
-    <a class="btn btn--ghost btn--icon" href="#/ajustes" aria-label="Ajustes">
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="ico">
-        <circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="1.6"/>
-        <path d="M12 2.8v2.4M12 18.8v2.4M21.2 12h-2.4M5.2 12H2.8M18.5 5.5l-1.7 1.7M7.2 16.8l-1.7 1.7M18.5 18.5l-1.7-1.7M7.2 7.2 5.5 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    <!-- Con etiqueta visible: hay sitio de sobra y un icono solo obliga a
+         adivinar. Los controles deslizantes dicen "ajustar" mejor que un
+         engranaje, y es literalmente lo que hay dentro: intervalos editables. -->
+    <a class="btn btn--ghost" href="#/ajustes">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="ico"
+           fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+        <path d="M4 7h10.8M19.2 7H20M4 12h4.8M13.2 12H20M4 17h8.8M17.2 17H20"/>
+        <circle cx="17" cy="7" r="2.2"/>
+        <circle cx="11" cy="12" r="2.2"/>
+        <circle cx="15" cy="17" r="2.2"/>
       </svg>
+      Ajustes
     </a>
   </nav>
 </header>
