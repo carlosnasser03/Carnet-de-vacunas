@@ -4,3 +4,7 @@
 # Sistema operativo
 Thumbs.db
 .DS_Store
+
+# Vista previa generada por tools/build-preview.mjs
+vista-previa.html
+prueba-artifact.html
